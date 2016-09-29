@@ -1,6 +1,7 @@
 from contextlib import contextmanager
 from fabric.api import abort, cd, env, local, prefix, put, run, settings, sudo, task
 from fabric.contrib.console import confirm
+from fabric.contrib.files import exists
 
 
 env.use_ssh_config = True
@@ -77,7 +78,7 @@ def restart():
 @task
 def reload():
     sudo('touch {}'.format(env.uwsgi_config))
-    
+
 
 @task
 def requirements():
@@ -85,9 +86,23 @@ def requirements():
         sudo('pip install -U -r {}'.format(env.requirements), user=env.chown_user)
 
 
+@task
+def bootstrap():
+    with cd('{}/time_tracker/settings'.format(env.project_root)):
+        if not exists('local.py'):
+            sudo('ln -s production.py local.py', user=env.chown_user)
+
+
+@task
+def createsuperuser():
+    with virtualenv():
+        sudo('./manage.py createsuperuser', user=env.chown_user)
+
+
 @task(default=True)
 def deploy():
     pull()
+    bootstrap()
     requirements()
     collectstatic()
     migrate()

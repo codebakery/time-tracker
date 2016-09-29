@@ -1,6 +1,3 @@
-.vagrant
-.idea
-
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -82,6 +79,7 @@ celerybeat-schedule
 .env
 
 # virtualenv
+.venv/
 venv/
 ENV/
 
@@ -90,3 +88,9 @@ ENV/
 
 # Rope project settings
 .ropeproject
+
+# Project specific
+.vagrant
+.idea
+time_tracker/settings/local.py
+db.sqlite3

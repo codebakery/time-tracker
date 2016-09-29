@@ -20,6 +20,4 @@ urlpatterns = [
     url(r'^api/records/', include('records.urls')),
     # Docs
     url(r'^docs/', schema_view),
-    # views
-    url(r'', include('records.urls_view')),
 ]

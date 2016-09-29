@@ -103,5 +103,6 @@ Vagrant.configure(2) do |config|
       # python libs dependencies
       sudo apt-get -y install libjpeg-dev
       sudo python3.5 -m pip install -r requirements.txt
+      ln -sf time_tracker/settings/vagrant.py time_tracker/settings/local.py
   SHELL
 end

@@ -14,13 +14,3 @@ class Records(generics.ListCreateAPIView):
     queryset = Record.objects.all()
     serializer_class = RecordSerializer
     permission_classes = (IsAuthenticated,)
-    
-    
-# VIEWS
-
-def index(request):
-    rs = Record.objects.all()
-    return render_to_response('index.html', {'records': rs})
-
-def records_view(request):
-    return render_to_response('records_form.html')
