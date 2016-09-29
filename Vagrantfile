@@ -54,11 +54,23 @@ Vagrant.configure(2) do |config|
       sudo apt-get install -y virtualbox-guest-utils
       
       # DOCKER
-      curl -sSL https://get.docker.com/ | sh
-      
+      curl -sSL https://get.docker.com/ | sh      
       curl -L https://github.com/docker/machine/releases/download/v0.7.0/docker-machine-`uname -s`-`uname -m` > sudo /usr/local/bin/docker-machine
+      sudo chmod +x /usr/local/bin/docker-machine  
+      
+      # DOCKER-COMPOSE
+      sudo apt-get update
+      sudo apt-get install apt-transport-https ca-certificates
+      sudo apt-get install linux-image-extra-$(uname -r) linux-image-extra-virtual -yq
+      sudo curl -o /usr/local/bin/docker-compose -L https://github.com/docker/compose/releases/download/1.8.0/docker-compose-`uname -s`-`uname -m`
+      sudo chmod +x /usr/local/bin/docker-compose
+      
+      # DOCKER-MACHINE
+      sudo curl -o /usr/local/bin/docker-machine -L https://github.com/docker/machine/releases/download/v0.8.0/docker-machine-`uname -s`-`uname -m`
       sudo chmod +x /usr/local/bin/docker-machine
-  
+
+      
+      
       set -e
       
       if [ -x /usr/local/bin/python3.5 ]; then
