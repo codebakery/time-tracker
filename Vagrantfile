@@ -60,7 +60,7 @@ Vagrant.configure(2) do |config|
       
       # DOCKER-COMPOSE
       sudo apt-get update
-      sudo apt-get install apt-transport-https ca-certificates
+      sudo apt-get install apt-transport-https ca-certificates -y
       sudo apt-get install linux-image-extra-$(uname -r) linux-image-extra-virtual -yq
       sudo curl -o /usr/local/bin/docker-compose -L https://github.com/docker/compose/releases/download/1.8.0/docker-compose-`uname -s`-`uname -m`
       sudo chmod +x /usr/local/bin/docker-compose
