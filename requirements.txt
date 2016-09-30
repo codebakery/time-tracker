@@ -4,6 +4,7 @@ setuptools
 Django
 django-rest-swagger
 djangorestframework
+djangorestframework-csv
 factory-boy
 ipdb
 ipython
