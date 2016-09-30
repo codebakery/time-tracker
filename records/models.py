@@ -7,6 +7,9 @@ class Project(models.Model):
     description = models.TextField(blank=True)
     # owner = company/user ?
     
+    def __str__(self):
+        return self.name
+    
     
 class Record(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
