@@ -8,7 +8,6 @@ from . import models
 class UserAdmin(DjangoUserAdmin):
     list_display = ('username', 'email', 'timestamp')
     list_display_links = ('username', 'email',)
-    #change_list_template = 'admin/registration/list_users.html'
     form = UserChangeForm
     add_form = UserCreationForm
     change_password_form = AdminPasswordChangeForm
