@@ -3,7 +3,7 @@ from django.db import models
 
 
 class Project(models.Model):
-    name = models.CharField(max_length=250)
+    name = models.CharField(max_length=250, unique=True)
     description = models.TextField(blank=True)
     # owner = company/user ?
     
