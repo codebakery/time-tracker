@@ -1,6 +1,7 @@
 import factory
 
 from django.contrib.auth import get_user_model
+from django.utils import timezone
 
 from ..models import Record, Project
 
@@ -13,4 +14,12 @@ class ProjectFactory(factory.DjangoModelFactory):
     
     name = 'name'
     description = 'descr'
+    
+
+class RecordFactory(factory.DjangoModelFactory):
+    class Meta:
+        model = Record
+        
+    time_spent = 5
+    date = timezone.now().date()
     

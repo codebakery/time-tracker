@@ -6,7 +6,7 @@ from rest_framework.authtoken.models import Token
 from rest_framework.test import APITestCase
 
 from registration.tests.factories import UserFactory
-from .factories import ProjectFactory
+from .factories import ProjectFactory, RecordFactory
 from ..models import Record, Project
 
 User = get_user_model()
@@ -35,3 +35,20 @@ class TestRecordCRUD(APITestCase):
         self.assertEqual(resp.status_code, status.HTTP_201_CREATED, msg=str(resp.content))
         r = Record.objects.get(date=self.data['date'])
         self.assertEqual(r.project, project)
+        
+
+class TestRecordsVisibility(APITestCase):
+    def setUp(self):
+        self.user_A = UserFactory()
+        self.user_B = UserFactory()
+        self.record_A = RecordFactory(user=self.user_A, description='A_descr')
+        self.record_B = RecordFactory(user=self.user_B, description='B_descr')
+        
+    def test_user_a_doesnt_see_records_from_user_b(self):
+        # auth
+        token = Token.objects.get(user__username=self.user_A.username)
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        resp = self.client.get(reverse('records'))
+        self.assertEqual(resp.status_code, status.HTTP_200_OK, msg=str(resp.content))
+        self.assertIn(self.record_A.description, str(resp.content))
+        self.assertNotIn(self.record_B.description, str(resp.content))

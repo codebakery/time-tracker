@@ -24,6 +24,12 @@ class Records(generics.ListCreateAPIView):
     permission_classes = (IsAuthenticated,)
     renderer_classes = api_settings.DEFAULT_RENDERER_CLASSES + [RecordsRenderer,]
     
+    def filter_queryset(self, queryset):
+        if self.request.user.is_superuser:
+            return queryset
+        else:
+            return queryset.filter(user=self.request.user)
+    
 
 class Projects(generics.ListCreateAPIView):
     queryset = Project.objects.all()
