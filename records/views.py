@@ -5,6 +5,7 @@ from django.shortcuts import render_to_response
 from rest_framework import status, generics, settings as drf_settings, filters
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_csv import renderers
+import django_filters
 
 from .models import Record, Project
 from .serializers import RecordSerializer, ProjectSerializer
@@ -18,13 +19,20 @@ class RecordsRenderer (renderers.CSVRenderer):
 
 api_settings = drf_settings.APISettings(None, drf_settings.DEFAULTS, drf_settings.IMPORT_STRINGS)
 
+class RecordsFilter(filters.FilterSet):
+    date = django_filters.DateRangeFilter()
+    
+    class Meta:
+        model = Record
+        fields = ('date', 'user', 'project', )
+
 class Records(generics.ListCreateAPIView):
     queryset = Record.objects.all()
     serializer_class = RecordSerializer
     permission_classes = (IsAuthenticated,)
     renderer_classes = api_settings.DEFAULT_RENDERER_CLASSES + [RecordsRenderer,]
     filter_backends = (filters.DjangoFilterBackend,)
-    filter_fields = ('date', 'user', 'project', )
+    filter_class = RecordsFilter
     
     def get_queryset(self):
         queryset = Record.objects.all()
