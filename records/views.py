@@ -20,7 +20,7 @@ class RecordsRenderer (renderers.CSVRenderer):
 api_settings = drf_settings.APISettings(None, drf_settings.DEFAULTS, drf_settings.IMPORT_STRINGS)
 
 class RecordsFilter(filters.FilterSet):
-    date = django_filters.DateRangeFilter()
+    date = django_filters.DateFromToRangeFilter()
     
     class Meta:
         model = Record
