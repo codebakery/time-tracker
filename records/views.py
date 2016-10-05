@@ -13,7 +13,7 @@ User = get_user_model()
 
 
 class RecordsRenderer (renderers.CSVRenderer):
-    header = ('date', 'user', 'time_spent', 'project', 'description', 'timestamp',)
+    header = ('date', 'user', 'time_spent', 'project', 'description',)
 
 
 api_settings = drf_settings.APISettings(None, drf_settings.DEFAULTS, drf_settings.IMPORT_STRINGS)
