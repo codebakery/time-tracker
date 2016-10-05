@@ -23,7 +23,7 @@ class Records(generics.ListCreateAPIView):
     serializer_class = RecordSerializer
     permission_classes = (IsAuthenticated,)
     renderer_classes = api_settings.DEFAULT_RENDERER_CLASSES + [RecordsRenderer,]
-    # filter_backends = (filters.DjangoFilterBackend,)
+    filter_backends = (filters.DjangoFilterBackend,)
     
     def get_queryset(self):
         queryset = Record.objects.all()
