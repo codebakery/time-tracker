@@ -22,7 +22,7 @@ class RecordSerializer(serializers.ModelSerializer):
     class Meta:
         model = Record
         fields = ('date', 'user', 'time_spent', 'project', 'description',)
-        read_only_fields = ('user', 'timestamp')        
+        read_only_fields = ('user',)        
           
     def save(self, **kwargs):
         instance = super().save(user=self.context['request'].user)
