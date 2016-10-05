@@ -24,6 +24,7 @@ class Records(generics.ListCreateAPIView):
     permission_classes = (IsAuthenticated,)
     renderer_classes = api_settings.DEFAULT_RENDERER_CLASSES + [RecordsRenderer,]
     filter_backends = (filters.DjangoFilterBackend,)
+    filter_fields = ('date', )
     
     def get_queryset(self):
         queryset = Record.objects.all()
