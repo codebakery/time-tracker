@@ -32,6 +32,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'rest_framework_swagger',
+    'django_filters',
+    'crispy_forms',
     # apps
     'registration.apps.RegistrationConfig',
     'records.apps.RecordsConfig',
