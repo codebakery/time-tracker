@@ -30,7 +30,7 @@ class TestRecordCRUD(APITestCase):
         
     def test_create_record_with_project_when_project_exist(self):
         project = ProjectFactory()
-        self.data.update({'project': project.pk})
+        self.data.update({'project': project.name})
         resp = self.client.post(reverse('records'), self.data)
         self.assertEqual(resp.status_code, status.HTTP_201_CREATED, msg=str(resp.content))
         r = Record.objects.get(date=self.data['date'])
