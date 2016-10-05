@@ -14,17 +14,19 @@ User = get_user_model()
 
 
 class RecordsRenderer (renderers.CSVRenderer):
-    header = ('date', 'user', 'time_spent', 'project', 'description',)
+    header = ('date', 'user', 'time_spent', 'project', 'description', 'issue')
 
 
 api_settings = drf_settings.APISettings(None, drf_settings.DEFAULTS, drf_settings.IMPORT_STRINGS)
 
+
 class RecordsFilter(filters.FilterSet):
     date = django_filters.DateFromToRangeFilter(widget=django_filters.widgets.RangeWidget(attrs={'type': 'date'}))
-    
+
     class Meta:
         model = Record
         fields = ('date', 'user', 'project', )
+
 
 class Records(generics.ListCreateAPIView):
     queryset = Record.objects.all()
@@ -33,14 +35,14 @@ class Records(generics.ListCreateAPIView):
     renderer_classes = api_settings.DEFAULT_RENDERER_CLASSES + [RecordsRenderer,]
     filter_backends = (filters.DjangoFilterBackend,)
     filter_class = RecordsFilter
-    
+
     def get_queryset(self):
         queryset = Record.objects.all()
         if self.request.user.is_superuser:
             return queryset
         else:
             return queryset.filter(user=self.request.user)
-    
+
 
 class Projects(generics.ListCreateAPIView):
     queryset = Project.objects.all()

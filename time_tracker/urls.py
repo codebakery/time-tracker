@@ -22,5 +22,5 @@ urlpatterns = [
     url(r'^api/records/', include('records.urls')),
     # Docs
     url(r'^docs/', schema_view),
-    url(r'^$', record_view.Records.as_view())
+    url(r'^$', record_view.Records.as_view())  # TODO: remove me when we have frontend
 ]

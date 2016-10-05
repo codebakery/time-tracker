@@ -21,7 +21,7 @@ class RecordSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Record
-        fields = ('date', 'user', 'time_spent', 'project', 'description',)
+        fields = ('date', 'user', 'time_spent', 'issue', 'project', 'description',)
         read_only_fields = ('user',)        
           
     def save(self, **kwargs):
