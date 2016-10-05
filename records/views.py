@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 from django.conf import settings
 from django.http.response import HttpResponse
 from django.shortcuts import render_to_response
-from rest_framework import status, generics, settings as drf_settings
+from rest_framework import status, generics, settings as drf_settings, filters
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_csv import renderers
 
@@ -23,8 +23,10 @@ class Records(generics.ListCreateAPIView):
     serializer_class = RecordSerializer
     permission_classes = (IsAuthenticated,)
     renderer_classes = api_settings.DEFAULT_RENDERER_CLASSES + [RecordsRenderer,]
+    # filter_backends = (filters.DjangoFilterBackend,)
     
-    def filter_queryset(self, queryset):
+    def get_queryset(self):
+        queryset = Record.objects.all()
         if self.request.user.is_superuser:
             return queryset
         else:
