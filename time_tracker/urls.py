@@ -1,12 +1,12 @@
 from django.conf.urls import url, include
 from django.contrib import admin
 from rest_framework import renderers, response, schemas
-from rest_framework.authtoken import views as drf_view
 from rest_framework.decorators import api_view, renderer_classes
 from rest_framework.routers import DefaultRouter
 from rest_framework_swagger.renderers import OpenAPIRenderer, SwaggerUIRenderer
 
 from records import views as record_view
+from registration import views as registration_view
 
 
 @api_view()
@@ -19,7 +19,7 @@ def schema_view(request):
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^api/auth/', include('rest_framework.urls', namespace='rest_framework')),
-    url(r'^api/token-auth/', drf_view.obtain_auth_token),
+    url(r'^api/token-auth/', registration_view.ObtainAuthToken.as_view()),
     url(r'^api/users/', include('registration.urls')),
     url(r'^api/records/', include('records.urls')),
     # Docs
