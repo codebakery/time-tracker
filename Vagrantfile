@@ -33,7 +33,7 @@ Vagrant.configure(2) do |config|
        # name machine
        # vb.name = "time_tracker"
        vb.memory = 512
-    end 
+    end
   #
   # View the documentation for the provider you are using for more
   # information on available options.
@@ -50,36 +50,37 @@ Vagrant.configure(2) do |config|
   # documentation for more information about their specific syntax and use.
   config.vm.provision "shell", inline: <<-SHELL
       sudo apt-get -y install software-properties-common python-software-properties
-      
+
       sudo apt-get install -y virtualbox-guest-utils
-      
+
       # DOCKER
-      curl -sSL https://get.docker.com/ | sh      
+      curl -sSL https://get.docker.com/ | sh
       curl -L https://github.com/docker/machine/releases/download/v0.7.0/docker-machine-`uname -s`-`uname -m` > sudo /usr/local/bin/docker-machine
-      sudo chmod +x /usr/local/bin/docker-machine  
-      
+      sudo chmod +x /usr/local/bin/docker-machine
+
       # DOCKER-COMPOSE
       sudo apt-get update
       sudo apt-get install apt-transport-https ca-certificates -y
       sudo apt-get install linux-image-extra-$(uname -r) linux-image-extra-virtual -yq
       sudo curl -o /usr/local/bin/docker-compose -L https://github.com/docker/compose/releases/download/1.8.0/docker-compose-`uname -s`-`uname -m`
       sudo chmod +x /usr/local/bin/docker-compose
-      
+
       # DOCKER-MACHINE
       sudo curl -o /usr/local/bin/docker-machine -L https://github.com/docker/machine/releases/download/v0.8.0/docker-machine-`uname -s`-`uname -m`
       sudo chmod +x /usr/local/bin/docker-machine
+      docker-machine create --driver virtualbox default
 
-      
-      
+
+
       set -e
-      
+
       if [ -x /usr/local/bin/python3.5 ]; then
         echo 'Skipping Python installation since Python 3.5 is already installed.'
       else
         echo 'Install required libraries...'
         apt-get update -yq
         apt-get install -yq libreadline-dev libsqlite3-dev libssl-dev build-essential libtool
-  
+
         echo 'Install Python 3.5...'
         cd /tmp
         wget -O- https://www.python.org/ftp/python/3.5.1/Python-3.5.1.tgz | tar xz
@@ -87,13 +88,13 @@ Vagrant.configure(2) do |config|
         ./configure
         make
         make altinstall
-  
+
         echo 'Clean up...'
         cd && rm -rf /tmp/Python-3.5.1
-  
+
         echo 'Done!'
       fi
-      
+
       # REDIS
       cd /home/vagrant
       wget http://download.redis.io/redis-stable.tar.gz
@@ -103,14 +104,14 @@ Vagrant.configure(2) do |config|
       sudo make install
       cd utils
       sudo ./install_server.sh
-          
+
       # POSTGRES
       sudo apt-get -y install postgresql libpq-dev
       sudo -u postgres createuser vagrant
       sudo -u postgres createdb vagrant
       sudo -u postgres createdb -O vagrant time_tracker
       sudo -u postgres psql -c "ALTER ROLE vagrant SUPERUSER"
-  
+
       cd /vagrant
       # python libs dependencies
       sudo apt-get -y install libjpeg-dev
