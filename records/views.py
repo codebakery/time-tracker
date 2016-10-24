@@ -9,6 +9,7 @@ import django_filters
 
 from .models import Record, Project
 from .serializers import RecordSerializer, ProjectSerializer
+from records.permissions import IsOwner
 
 User = get_user_model()
 
@@ -42,6 +43,13 @@ class Records(generics.ListCreateAPIView):
             return queryset
         else:
             return queryset.filter(user=self.request.user)
+
+
+class RecordDetail(generics.RetrieveUpdateAPIView):
+    queryset = Record.objects.all()
+    serializer_class = RecordSerializer
+    permission_classes = (IsAuthenticated, IsOwner)
+    renderer_classes = api_settings.DEFAULT_RENDERER_CLASSES + [RecordsRenderer,]
 
 
 class Projects(generics.ListCreateAPIView):
