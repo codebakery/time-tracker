@@ -10,22 +10,22 @@ User = get_user_model()
 
 
 class ProjectSerializer(serializers.ModelSerializer):
-    class Meta: 
+    class Meta:
         model = Project
         fields = ('name', 'description',)
-        
+
 
 class RecordSerializer(serializers.ModelSerializer):
     project = serializers.SlugRelatedField(slug_field='name', queryset=Project.objects.all(), allow_null=True, required=False)
-    user = serializers.SlugRelatedField(slug_field='username', read_only=True)    
-    
+    user = serializers.SlugRelatedField(slug_field='username', read_only=True)
+
     class Meta:
         model = Record
-        fields = ('date', 'user', 'time_spent', 'issue', 'project', 'description',)
-        read_only_fields = ('user',)        
-          
+        fields = ('id', 'date', 'user', 'time_spent', 'issue', 'project', 'description',)
+        read_only_fields = ('user',)
+
     def save(self, **kwargs):
         instance = super().save(user=self.context['request'].user)
         return instance
-        
+
 
