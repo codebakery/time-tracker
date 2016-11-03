@@ -1,5 +1,5 @@
 from contextlib import contextmanager
-from fabric.api import abort, cd, env, local, prefix, put, run, settings, sudo, task
+from fabric.api import abort, cd, env, local, prefix, run, settings, sudo, task
 from fabric.contrib.console import confirm
 from fabric.contrib.files import exists
 

@@ -1,6 +1,5 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.signals import user_logged_in
-from django.utils.translation import ugettext as _
 
 from rest_framework import status, generics
 from rest_framework.authtoken import views as authtoken_view

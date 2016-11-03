@@ -7,7 +7,8 @@ from rest_framework.test import APITestCase
 
 from registration.tests.factories import UserFactory
 from .factories import ProjectFactory, RecordFactory
-from ..models import Record, Project
+from ..models import Record
+
 
 User = get_user_model()
 
@@ -65,9 +66,9 @@ class TestRecordsDetailPermissions(APITestCase):
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
 
     def test_user_who_made_a_record_can_see_details(self):
-        resp = self.client.get(reverse('record_detail', kwargs={'pk':self.user_record.pk}))
+        resp = self.client.get(reverse('record_detail', kwargs={'pk': self.user_record.pk}))
         self.assertEqual(resp.status_code, status.HTTP_200_OK, msg=str(resp.content))
 
     def test_user_cant_see_details_of_other_users_records(self):
-        resp = self.client.get(reverse('record_detail', kwargs={'pk':self.user2_record.pk}))
+        resp = self.client.get(reverse('record_detail', kwargs={'pk': self.user2_record.pk}))
         self.assertEqual(resp.status_code, status.HTTP_403_FORBIDDEN, msg=str(resp.content))

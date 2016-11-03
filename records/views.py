@@ -1,8 +1,5 @@
 from django.contrib.auth import get_user_model
-from django.conf import settings
-from django.http.response import HttpResponse
-from django.shortcuts import render_to_response
-from rest_framework import status, generics, settings as drf_settings, filters
+from rest_framework import generics, settings as drf_settings, filters
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_csv import renderers
 import django_filters
@@ -33,7 +30,7 @@ class Records(generics.ListCreateAPIView):
     queryset = Record.objects.all()
     serializer_class = RecordSerializer
     permission_classes = (IsAuthenticated,)
-    renderer_classes = api_settings.DEFAULT_RENDERER_CLASSES + [RecordsRenderer,]
+    renderer_classes = api_settings.DEFAULT_RENDERER_CLASSES + [RecordsRenderer]
     filter_backends = (filters.DjangoFilterBackend,)
     filter_class = RecordsFilter
 
@@ -49,7 +46,7 @@ class RecordDetail(generics.RetrieveUpdateAPIView):
     queryset = Record.objects.all()
     serializer_class = RecordSerializer
     permission_classes = (IsAuthenticated, IsOwner)
-    renderer_classes = api_settings.DEFAULT_RENDERER_CLASSES + [RecordsRenderer,]
+    renderer_classes = api_settings.DEFAULT_RENDERER_CLASSES + [RecordsRenderer]
 
 
 class Projects(generics.ListCreateAPIView):
