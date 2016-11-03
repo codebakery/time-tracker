@@ -11,3 +11,5 @@
        - "8000:8000"
      depends_on:
        - db
+     environment:
+       PROJECT_SETTING: 'docker'
