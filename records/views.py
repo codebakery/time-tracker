@@ -53,7 +53,7 @@ class Records(generics.ListCreateAPIView):
             return self.serializer_class
 
 
-class RecordDetail(generics.RetrieveUpdateAPIView):
+class RecordDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Record.objects.all()
     serializer_class = RecordSerializer
     permission_classes = (IsAuthenticated, IsOwner)
