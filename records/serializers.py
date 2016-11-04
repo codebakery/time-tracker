@@ -14,8 +14,6 @@ class ProjectSerializer(serializers.ModelSerializer):
 
 
 class RecordSerializer(serializers.ModelSerializer):
-    project = serializers.SlugRelatedField(slug_field='name', queryset=Project.objects.all(),
-                                           allow_null=True, required=False)
     user = serializers.SlugRelatedField(slug_field='username', read_only=True)
 
     class Meta:
