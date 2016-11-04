@@ -76,8 +76,13 @@ def restart():
 
 
 @task
-def reload():
+def reload_uwsgi():
     sudo('touch {}'.format(env.uwsgi_config))
+
+
+@task
+def reload_nginx():
+    sudo('service nginx reload')
 
 
 @task
@@ -106,4 +111,5 @@ def deploy():
     requirements()
     collectstatic()
     migrate()
-    reload()
+    reload_uwsgi()
+    reload_nginx()
