@@ -21,7 +21,7 @@ urlpatterns = [
     url(r'^api/token-auth/', registration_view.ObtainAuthToken.as_view()),
     url(r'^api/users/', include('registration.urls')),
     url(r'^api/records/', include('records.urls')),
-    url(r'^api/records/', record_view.Projects.as_view(), name='projects'),
+    url(r'^api/projects/', record_view.Projects.as_view(), name='projects'),
     # Docs
     url(r'^docs/', schema_view),
     url(r'^$', record_view.Records.as_view())  # TODO: remove me when we have frontend
