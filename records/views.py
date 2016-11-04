@@ -14,6 +14,11 @@ User = get_user_model()
 class RecordsRenderer (renderers.CSVRenderer):
     header = ('date', 'user', 'time_spent', 'project', 'description', 'issue')
 
+    def render(self, data, *args, **kwargs):
+        if not isinstance(data, list):
+            data = data.get('results', [])
+        return super(RecordsRenderer, self).render(data, *args, **kwargs)
+
 
 api_settings = drf_settings.APISettings(None, drf_settings.DEFAULTS, drf_settings.IMPORT_STRINGS)
 
