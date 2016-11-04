@@ -24,3 +24,12 @@ class RecordSerializer(serializers.ModelSerializer):
     def save(self, **kwargs):
         instance = super().save(user=self.context['request'].user)
         return instance
+
+
+class RecordCSVSerializer(RecordSerializer):
+    project = serializers.SlugRelatedField(slug_field='name', queryset=Project.objects.all(),
+                                           allow_null=True, required=False)
+    class Meta:
+        model = Record
+        fields = ('id', 'date', 'user', 'time_spent', 'issue', 'project', 'description',)
+        read_only_fields = ('user',)

@@ -5,7 +5,7 @@ from rest_framework_csv import renderers
 import django_filters
 
 from .models import Record, Project
-from .serializers import RecordSerializer, ProjectSerializer
+from .serializers import RecordSerializer, RecordCSVSerializer, ProjectSerializer
 from records.permissions import IsOwner
 
 User = get_user_model()
@@ -45,6 +45,12 @@ class Records(generics.ListCreateAPIView):
             return queryset
         else:
             return queryset.filter(user=self.request.user)
+
+    def get_serializer_class(self):
+        if isinstance(self.perform_content_negotiation(self.request)[0], RecordsRenderer):
+            return RecordCSVSerializer
+        else:
+            return self.serializer_class
 
 
 class RecordDetail(generics.RetrieveUpdateAPIView):
