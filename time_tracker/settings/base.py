@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'rest_framework_swagger',
     'django_filters',
     'crispy_forms',
+    'daterange_filter',
     # apps
     'registration.apps.RegistrationConfig',
     'records.apps.RecordsConfig',
